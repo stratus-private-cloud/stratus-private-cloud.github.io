@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stratus</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A virtual NAS you host yourself. Like Nextcloud and ownCloud, but much simpler and with far lower requirements.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the page is a stack of strata -- a sky band carrying the mark, then
+   flat layers, each a full-width band with one job. */
+:root {
+  --bg: #f4f7fb;
+  --surface: #ffffff;
+  --fg: #0f1d2e;
+  --muted: #4d6077;
+  --line: #d6e0ec;
+  --accent: #2c6fb5;
+  --sky-top: #5aa0ec;
+  --sky-bottom: #2c6fb5;
+  --on-sky: #ffffff;
+  --code-bg: #0f1d2e;
+  --code-fg: #dbe8f7;
+  --ok: #1f7a4d;
+  --part: #9a6400;
+  --plan: #6b7a8c;
+
+  --display: "Familjen Grotesk", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a131e; --surface: #0f1b29; --fg: #e4edf7; --muted: #93a7be;
+    --line: #1e2d40; --accent: #8ec3f5; --sky-top: #2a5f9c; --sky-bottom: #12345c;
+    --on-sky: #f2f7fd; --code-bg: #060c14; --code-fg: #cfe0f3;
+    --ok: #5fd39a; --part: #f0b44c; --plan: #8798ad;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a131e; --surface: #0f1b29; --fg: #e4edf7; --muted: #93a7be;
+  --line: #1e2d40; --accent: #8ec3f5; --sky-top: #2a5f9c; --sky-bottom: #12345c;
+  --on-sky: #f2f7fd; --code-bg: #060c14; --code-fg: #cfe0f3;
+  --ok: #5fd39a; --part: #f0b44c; --plan: #8798ad;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1rem/1.6 var(--body);
+}
+a { color: var(--accent); text-underline-offset: 3px }
+a:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px }
+code { font-family: var(--mono); font-size: .9em }
+
+.wrap {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.band { padding-block: clamp(3rem, 7vw, 5.5rem); border-top: 1px solid var(--line) }
+
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; text-wrap: balance; margin: 0 }
+h2 { font-size: clamp(1.75rem, 3.6vw, 2.5rem); font-weight: 700; letter-spacing: -.01em }
+h3 { font-size: 1.2rem; font-weight: 600 }
+.eyebrow {
+  font: 500 .78rem/1 var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+.lede { color: var(--muted); max-width: 40rem; margin: 1rem 0 0; font-size: 1.08rem }
+
+/* ---- sky ---- */
+.sky {
+  background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom));
+  color: var(--on-sky);
+  overflow: hidden;
+}
+.sky .wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding-block: clamp(2.5rem, 7vw, 5.5rem);
+}
+.sky h1 { font-size: clamp(2.6rem, 6.4vw, 4.6rem); font-weight: 700; letter-spacing: -.025em }
+.sky p { font-size: clamp(1.05rem, 1.6vw, 1.2rem); max-width: 34rem; margin: 1.25rem 0 0; opacity: .92 }
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 2.25rem }
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .75rem 1.2rem;
+  border-radius: 999px;
+  font: 600 .98rem/1 var(--body);
+  text-decoration: none;
+  border: 1.5px solid currentColor;
+  color: var(--on-sky);
+  transition: background-color .15s, color .15s;
+}
+.btn.primary { background: var(--on-sky); color: var(--sky-bottom); border-color: var(--on-sky) }
+.btn:hover { background: color-mix(in srgb, var(--on-sky) 16%, transparent) }
+.btn.primary:hover { background: color-mix(in srgb, var(--on-sky) 88%, var(--sky-top)) }
+.demo-note { font-size: .88rem !important; margin-top: 1rem !important; opacity: .8 !important }
+
+/* The mark, drawn as three labelled strata rather than an image. */
+.strata { display: grid; gap: clamp(.7rem, 1.6vw, 1rem); max-width: 30rem; width: 100%; justify-self: end }
+.stratum {
+  height: clamp(3.4rem, 7vw, 4.6rem);
+  border-radius: 999px;
+  background: var(--on-sky);
+  color: var(--sky-bottom);
+  display: flex; align-items: center;
+  padding: 0 1.4rem;
+  box-shadow: 0 10px 30px -14px rgba(5, 20, 40, .55);
+  animation: settle .9s cubic-bezier(.2, .8, .2, 1) both;
+}
+.stratum:nth-child(1) { width: 63.6%; justify-self: end; animation-delay: .05s; --from: 40px }
+.stratum:nth-child(2) { width: 100%; animation-delay: .15s; --from: -40px }
+.stratum:nth-child(3) { width: 63.6%; justify-self: start; animation-delay: .25s; --from: -40px }
+@keyframes settle { from { transform: translateX(var(--from)) } to { transform: none } }
+@media (prefers-reduced-motion: reduce) { .stratum { animation: none } }
+
+/* ---- features ---- */
+.intro { font-size: 1.15rem; max-width: 46rem; margin: 0 0 2rem }
+.features { margin: 0; padding: 0; list-style: none; display: grid; gap: 1rem; max-width: 46rem }
+.features > li { padding-left: 1.6rem; position: relative }
+.features > li::before { content: ""; position: absolute; left: 0; top: .66em; width: .85rem; height: .32rem; border-radius: 999px; background: var(--accent) }
+.features ul { margin: .8rem 0 0; padding: 0; list-style: none; display: grid; gap: .6rem; color: var(--muted) }
+.features ul li { padding-left: 1.2rem; position: relative }
+.features ul li::before { content: ""; position: absolute; left: 0; top: .7em; width: .45rem; height: .25rem; border-radius: 999px; background: var(--line) }
+
+/* ---- screenshots ---- */
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 2rem }
+.shots figure { margin: 0; display: grid; gap: .6rem; align-content: start }
+.shots img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); background: var(--surface) }
+.shots figcaption { color: var(--muted); font-size: .9rem }
+
+footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .88rem }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem }
+
+@media (max-width: 52rem) {
+  .sky .wrap { grid-template-columns: minmax(0, 1fr) }
+  .strata { justify-self: stretch; max-width: 26rem }
+  .shots { grid-template-columns: minmax(0, 1fr) }
+}
+</style>
+</head>
+<body>
+
+<header class="sky">
+  <div class="wrap">
+    <div>
+      <h1>Stratus virtual private cloud</h1>
+      <div class="actions">
+        <a class="btn primary" href="https://stratus-demo.dropdatabase.es">Try the demo</a>
+        <a class="btn" href="https://github.com/stratus-private-cloud">GitHub</a>
+      </div>
+      <p class="demo-note">Sign in as <code>demo</code>. The password is the version string in the page footer.</p>
+    </div>
+    <div class="strata" aria-hidden="true">
+      <div class="stratum"></div>
+      <div class="stratum"></div>
+      <div class="stratum"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="band" id="features">
+  <div class="wrap">
+    <p class="intro">Stratus is a virtual NAS you host yourself. Similar to Nextcloud and ownCloud, but much simpler and with far lower requirements. Open source, with the backend 100% vibe-coded in Go.</p>
+    <ul class="features">
+      <li>Storage on the server's own disk or in S3. Make the most of <a href="https://github.com/stratus-private-cloud/stratus-backend/blob/main/doc/deploy/s3.md">low-cost S3-compatible providers</a> such as Backblaze B2, Wasabi or Cloudflare R2.</li>
+      <li><a href="https://github.com/stratus-private-cloud/stratus-backend/blob/main/doc/deploy/database.md">Database</a>: MySQL, PostgreSQL or SQLite.</li>
+      <li><a href="https://github.com/stratus-private-cloud/stratus-backend/tree/main/doc/deploy">Templates to deploy with Docker</a> on Fly.io, Render and Coolify.</li>
+      <li><a href="https://github.com/stratus-private-cloud/stratus-app">Android app</a> for backups (beta).</li>
+      <li>Single user: a truly private cloud, just for you. No permission systems or user accounts to manage.</li>
+      <li>Popular protocols:
+        <ul>
+          <li>Reach your files over the internet with <a href="https://github.com/stratus-private-cloud/stratus-backend#webdav">WebDAV</a>, from Windows, Linux and macOS.</li>
+          <li>Cast to a Chromecast from the browser or the app.</li>
+          <li>Listen to your music with <a href="https://github.com/stratus-private-cloud/stratus-backend#opensubsonic">Subsonic-compatible apps</a>.</li>
+          <li>Send media to a DLNA TV from the Android app.</li>
+          <li><a href="https://github.com/stratus-private-cloud/stratus-backend#caldav">CalDAV</a> and <a href="https://github.com/stratus-private-cloud/stratus-backend#carddav">CardDAV</a>, if you also want to sync your calendar and contacts.</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="band" id="screenshots">
+  <div class="wrap">
+    <h2>Screenshots</h2>
+    <div class="shots">
+      <figure><img src="screens/files-wide.jpg" width="1280" height="800" alt="The file browser in the web UI, listing a folder of photos"><figcaption>Files</figcaption></figure>
+      <figure><img src="screens/photos-wide.jpg" width="1280" height="800" alt="The photo gallery in the web UI, grouped by month"><figcaption>Photos</figcaption></figure>
+      <figure><img src="screens/music-wide.jpg" width="1280" height="800" alt="An album page in the web UI's music library"><figcaption>Music</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <a href="https://github.com/stratus-private-cloud">github.com/stratus-private-cloud</a>
+    <a href="https://github.com/orgs/stratus-private-cloud/projects/1">Project board</a>
+  </div>
+</footer>
+
+</body>
+</html>
