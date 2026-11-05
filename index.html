@@ -111,12 +111,11 @@ h3 { font-size: 1.2rem; font-weight: 600 }
 .btn.primary { background: var(--on-sky); color: var(--sky-bottom); border-color: var(--on-sky) }
 .btn:hover { background: color-mix(in srgb, var(--on-sky) 16%, transparent) }
 .btn.primary:hover { background: color-mix(in srgb, var(--on-sky) 88%, var(--sky-top)) }
-.demo-note { font-size: .88rem !important; margin-top: 1rem !important; opacity: .8 !important }
 
 /* The mark, drawn as three labelled strata rather than an image. */
-.strata { display: grid; gap: clamp(.7rem, 1.6vw, 1rem); max-width: 30rem; width: 100%; justify-self: end }
+.strata { display: grid; gap: clamp(.45rem, 1vw, .65rem); max-width: 17rem; width: 100%; justify-self: center }
 .stratum {
-  height: clamp(3.4rem, 7vw, 4.6rem);
+  height: clamp(2rem, 4vw, 2.7rem);
   border-radius: 999px;
   background: var(--on-sky);
   color: var(--sky-bottom);
@@ -140,6 +139,16 @@ h3 { font-size: 1.2rem; font-weight: 600 }
 .features ul li { padding-left: 1.2rem; position: relative }
 .features ul li::before { content: ""; position: absolute; left: 0; top: .7em; width: .45rem; height: .25rem; border-radius: 999px; background: var(--line) }
 
+/* ---- demo ---- */
+.demo { display: grid; gap: 1rem; justify-items: start }
+.demo p { margin: 0; max-width: 46rem; color: var(--muted) }
+.demo dl { margin: .25rem 0; display: grid; gap: .5rem; max-width: 46rem }
+.demo dl div { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1rem }
+.demo dt { font: 500 .78rem/1.9 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted) }
+.demo dd { margin: 0 }
+.btn.demo-btn { color: var(--on-sky); background: var(--sky-bottom); border-color: var(--sky-bottom); margin-top: .5rem }
+.btn.demo-btn:hover { background: var(--sky-top); border-color: var(--sky-top) }
+
 /* ---- screenshots ---- */
 .shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 2rem }
 .shots figure { margin: 0; display: grid; gap: .6rem; align-content: start }
@@ -151,7 +160,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
 @media (max-width: 52rem) {
   .sky .wrap { grid-template-columns: minmax(0, 1fr) }
-  .strata { justify-self: stretch; max-width: 26rem }
+  .strata { justify-self: start; max-width: 12rem }
   .shots { grid-template-columns: minmax(0, 1fr) }
 }
 </style>
@@ -163,10 +172,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div>
       <h1>Stratus virtual private cloud</h1>
       <div class="actions">
-        <a class="btn primary" href="https://stratus-demo.dropdatabase.es">Try the demo</a>
+        <a class="btn primary" href="#demo">Try the demo</a>
         <a class="btn" href="https://github.com/stratus-private-cloud">GitHub</a>
       </div>
-      <p class="demo-note">Sign in as <code>demo</code>. The password is the version string in the page footer.</p>
     </div>
     <div class="strata" aria-hidden="true">
       <div class="stratum"></div>
@@ -197,6 +205,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         </ul>
       </li>
     </ul>
+  </div>
+</section>
+
+<section class="band" id="demo">
+  <div class="wrap demo">
+    <h2>Try the demo</h2>
+    <p>A public instance running the latest version is at <a href="https://stratus-demo.dropdatabase.es">stratus-demo.dropdatabase.es</a>.</p>
+    <dl>
+      <div><dt>User</dt><dd><code>demo</code></dd></div>
+      <div><dt>Password</dt><dd>the version shown at the bottom of the login page, e.g. <code>Stratus d5b0c1f</code> means the password is <code>d5b0c1f</code>. It changes with every release.</dd></div>
+    </dl>
+    <p>Anyone can sign in and its content is reset every hour, so don't upload anything private or that you want to keep.</p>
+    <div><a class="btn demo-btn" href="https://stratus-demo.dropdatabase.es">Open the demo</a></div>
   </div>
 </section>
 
