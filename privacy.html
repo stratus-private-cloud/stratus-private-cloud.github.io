@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Stratus app privacy</title>
-<meta name="description" content="What the Stratus app reads on your phone, where it sends it, and what it never sends anywhere.">
+<title>Stratus privacy</title>
+<meta name="description" content="What the Stratus app and server read, where they send it, and what they never send anywhere.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,7 +51,7 @@ a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-
   padding-left: max(16px, env(safe-area-inset-left, 0px));
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-h1, h2 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0 }
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0 }
 .sky { background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); color: var(--on-sky) }
 .sky .wrap { padding-block: clamp(2rem, 6vw, 3.5rem) }
 .sky a { color: var(--on-sky); font: 500 .8rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; opacity: .85 }
@@ -68,11 +68,15 @@ main .wrap { padding-block: clamp(2rem, 5vw, 3rem) }
   font-size: 1.08rem;
   margin: 0 0 2.5rem;
 }
-section + section { margin-top: 2.25rem }
-h2 { font-size: 1.35rem; font-weight: 700; margin-bottom: .6rem }
+.part + .part { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--line) }
+.part > h2 { font-size: 1.75rem; font-weight: 700 }
+.part > p { color: var(--muted) }
+section { margin-top: 2.25rem }
+h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: .6rem }
 p { margin: .6rem 0 0 }
 ul { margin: .6rem 0 0; padding-left: 1.25rem }
 li + li { margin-top: .35rem }
+code { font: 500 .9em var(--mono) }
 footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .88rem }
 </style>
 </head>
@@ -80,57 +84,93 @@ footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--mu
 <header class="sky">
   <div class="wrap">
     <a href="./">&larr; Stratus</a>
-    <h1>Privacy in the Stratus app</h1>
-    <p>Applies to the Stratus app for Android and iOS. Last changed 8 November 2026.</p>
+    <h1>Privacy in Stratus</h1>
+    <p>Applies to the Stratus app for Android and iOS and to the Stratus server. Last changed 8 November 2026.</p>
   </div>
 </header>
 <main>
   <div class="wrap">
-    <p class="summary">Your photographs and videos go to one place: the server you type into the app. The people who make Stratus run no server that receives them, and the app has no account with us, no advertising and no analytics.</p>
+    <p class="summary">Your photographs and videos go to one place: the server you type into the app. The people who make Stratus run no server that receives them, and neither the app nor the server has an account with us, advertising or analytics.</p>
 
-    <section>
-      <h2>What the app reads on your phone</h2>
-      <ul>
-        <li><strong>Photos and videos</strong>, in the folders or albums you choose to back up. The app needs to read the whole library because backing it up is its job; it reads each file to upload it and its date, name and size to decide where on your server it goes.</li>
-        <li><strong>The address, user name and password of your server</strong>, which you type in. They are kept on the phone in the Android Keystore or the iOS Keychain.</li>
-        <li><strong>Whether the network is metered</strong>, so a backup can wait for wifi.</li>
-        <li><strong>Televisions and speakers on your local network</strong>, only while you are choosing one to play something on.</li>
-      </ul>
-    </section>
+    <nav aria-label="On this page"><ul>
+      <li><a href="#app">The app</a></li>
+      <li><a href="#server">The server</a></li>
+    </ul></nav>
 
-    <section>
-      <h2>Where it sends it</h2>
-      <ul>
-        <li><strong>Your server.</strong> Photos, videos, and anything you upload, rename or delete in the app go to the server you configured, over the connection you agreed to: https, or plain http if you said yes to it for that server.</li>
-        <li><strong>A television or speaker you pick.</strong> Playing something on one hands it a link to that file on your server, valid for a day, so it can fetch the file itself.</li>
-        <li><strong>DAVx5, if you ask</strong> (Android). Tapping <em>Calendars and contacts</em> passes your server's address, user name and password to the DAVx5 app on the same phone, so it can set up the account. Nothing leaves the phone in that step.</li>
-      </ul>
-      <p>Nothing else. The app never sends your photos, videos or credentials to the people who make Stratus or to anybody else.</p>
-    </section>
+    <div class="part" id="app">
+      <h2>The app</h2>
+      <p>For Android and iOS. It backs up your camera roll and lets you browse and play what is on your server.</p>
 
-    <section>
-      <h2>Crash reports, only if you turn them on</h2>
-      <p>Crash reports are <strong>off</strong> until you switch them on in the app's menu, and you can switch them off again there at any time. When they are on, the app sends reports to <a href="https://sentry.io">Sentry</a>, a service we use to find and fix bugs:</p>
-      <ul>
-        <li>When the app crashes or an error is caught: the error and where in the code it happened, the device model, the operating system and its version, and the app's version.</li>
-        <li>When you play something on a television or speaker: a short technical log of how that went, which includes the device's name and the link to the file being played.</li>
-      </ul>
-      <p>Reports never include screenshots, a recording of the screen or what is drawn on it, or your password. See <a href="https://sentry.io/privacy/">Sentry's privacy policy</a>.</p>
-    </section>
+      <section>
+        <h3>What the app reads on your phone</h3>
+        <ul>
+          <li><strong>Photos and videos</strong>, in the folders or albums you choose to back up. The app needs to read the whole library because backing it up is its job; it reads each file to upload it and its date, name and size to decide where on your server it goes.</li>
+          <li><strong>The address, user name and password of your server</strong>, which you type in. They are kept on the phone in the Android Keystore or the iOS Keychain.</li>
+          <li><strong>Whether the network is metered</strong>, so a backup can wait for wifi.</li>
+          <li><strong>Televisions and speakers on your local network</strong>, only while you are choosing one to play something on.</li>
+        </ul>
+      </section>
 
-    <section>
-      <h2>Your server is yours</h2>
-      <p>Whoever runs the server you connect to — usually you — decides what happens to what is stored there. If you use somebody else's server, their policy applies to it, not this one.</p>
-    </section>
+      <section>
+        <h3>Where it sends it</h3>
+        <ul>
+          <li><strong>Your server.</strong> Photos, videos, and anything you upload, rename or delete in the app go to the server you configured, over the connection you agreed to: https, or plain http if you said yes to it for that server.</li>
+          <li><strong>A television or speaker you pick.</strong> Playing something on one hands it a link to that file on your server, valid for a day, so it can fetch the file itself.</li>
+          <li><strong>DAVx5, if you ask</strong> (Android). Tapping <em>Calendars and contacts</em> passes your server's address, user name and password to the DAVx5 app on the same phone, so it can set up the account. Nothing leaves the phone in that step.</li>
+        </ul>
+        <p>Nothing else. The app never sends your photos, videos or credentials to the people who make Stratus or to anybody else.</p>
+      </section>
+
+      <section>
+        <h3>Crash reports, only if you turn them on</h3>
+        <p>Crash reports are <strong>off</strong> until you switch them on in the app's menu, and you can switch them off again there at any time. When they are on, the app sends reports to <a href="https://sentry.io">Sentry</a>, a service we use to find and fix bugs:</p>
+        <ul>
+          <li>When the app crashes or an error is caught: the error and where in the code it happened, the device model, the operating system and its version, and the app's version.</li>
+          <li>When you play something on a television or speaker: a short technical log of how that went, which includes the device's name and the link to the file being played.</li>
+        </ul>
+        <p>Reports never include screenshots, a recording of the screen or what is drawn on it, or your password. See <a href="https://sentry.io/privacy/">Sentry's privacy policy</a>.</p>
+      </section>
+
+      <section>
+        <h3>Whose server it is</h3>
+        <p>What happens to what reaches your server is up to whoever runs it: see <a href="#server">the server</a> below. If you use somebody else's server, their policy applies to it, not this one.</p>
+      </section>
+    </div>
+
+    <div class="part" id="server">
+      <h2>The server</h2>
+      <p>The program you run on your own machine, or that somebody runs for you, and that the app and any other client connect to.</p>
+
+      <section>
+        <h3>What it keeps</h3>
+        <p>Everything you put on it: files, photographs, videos, music, calendars and contacts, and what it reads out of them to show them to you — dates, places and cameras in a photograph's EXIF, tags in a song, the length of a film — and the thumbnails it makes. It keeps them in the database and storage its owner configured, and nowhere else.</p>
+        <p>It also writes a log of the requests it answers, kept wherever its owner keeps logs.</p>
+      </section>
+
+      <section>
+        <h3>What it sends elsewhere</h3>
+        <p>Nothing, unless its owner turns one of these on:</p>
+        <ul>
+          <li><strong>Error reports</strong>, when <code>STRATUS_SENTRY_DSN</code> is set. Every error the server logs goes to that Sentry project, or anything that speaks its protocol, such as a self-hosted GlitchTip: the log line and the stack that logged it, which can include paths and file names from the library.</li>
+          <li><strong>Music lookup</strong>, when <code>STRATUS_MUSIC_LOOKUP</code> is on. An album's artist and name go to <a href="https://musicbrainz.org">MusicBrainz</a>, its MusicBrainz id to the <a href="https://coverartarchive.org">Cover Art Archive</a>, and a track's artist, title, album and length to <a href="https://lrclib.net">LRCLIB</a>, to find which record it is, its cover and its words. Nothing is sent about photographs, videos or other files.</li>
+        </ul>
+        <p>Both are off by default. A link you share hands that one file or folder to whoever has the link, until it expires.</p>
+      </section>
+
+      <section>
+        <h3>Who runs it</h3>
+        <p>Whoever runs the server — usually you — decides what happens to what is stored there and is responsible for it. The people who make Stratus have no access to anybody's server, the public demo aside, which is emptied every hour.</p>
+      </section>
+    </div>
 
     <section>
       <h2>Children</h2>
-      <p>The app is not aimed at children and collects nothing from anyone beyond what is described here.</p>
+      <p>Stratus is not aimed at children and collects nothing from anyone beyond what is described here.</p>
     </section>
 
     <section>
       <h2>Changes and questions</h2>
-      <p>If this page changes, the date at the top changes with it, and the history is public in <a href="https://github.com/stratus-private-cloud/stratus-private-cloud.github.io/commits/main/privacy.html">the site's repository</a>. Questions go to <a href="https://github.com/stratus-private-cloud/stratus-app/issues">the app's issue tracker</a>.</p>
+      <p>If this page changes, the date at the top changes with it, and the history is public in <a href="https://github.com/stratus-private-cloud/stratus-private-cloud.github.io/commits/main/privacy.html">the site's repository</a>. Questions go to the issue tracker of <a href="https://github.com/stratus-private-cloud/stratus-app/issues">the app</a> or <a href="https://github.com/stratus-private-cloud/stratus-backend/issues">the server</a>.</p>
     </section>
   </div>
 </main>
