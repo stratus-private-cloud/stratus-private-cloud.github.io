@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stratus privacy</title>
+<meta name="description" content="What data the Stratus app and server use, and where it goes.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root {
+  --bg: #f4f7fb;
+  --surface: #ffffff;
+  --fg: #0f1d2e;
+  --muted: #4d6077;
+  --line: #d6e0ec;
+  --accent: #2c6fb5;
+  --sky-top: #5aa0ec;
+  --sky-bottom: #2c6fb5;
+  --on-sky: #ffffff;
+
+  --display: "Familjen Grotesk", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a131e; --surface: #0f1b29; --fg: #e4edf7; --muted: #93a7be;
+    --line: #1e2d40; --accent: #8ec3f5; --sky-top: #2a5f9c; --sky-bottom: #12345c;
+    --on-sky: #f2f7fd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a131e; --surface: #0f1b29; --fg: #e4edf7; --muted: #93a7be;
+  --line: #1e2d40; --accent: #8ec3f5; --sky-top: #2a5f9c; --sky-bottom: #12345c;
+  --on-sky: #f2f7fd;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box }
+html { -webkit-text-size-adjust: 100% }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 1rem/1.65 var(--body) }
+a { color: var(--accent); text-underline-offset: 3px }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 4px }
+.wrap {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--display); line-height: 1.15; text-wrap: balance; margin: 0 }
+.sky { background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); color: var(--on-sky) }
+.sky .wrap { padding-block: clamp(2rem, 6vw, 3.5rem) }
+.sky a { color: var(--on-sky); font: 500 .8rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; text-decoration: none; opacity: .85 }
+.sky a:hover { opacity: 1 }
+.sky h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -.02em; margin-top: 1.25rem }
+.sky p { margin: .75rem 0 0; opacity: .9 }
+main .wrap { padding-block: clamp(2rem, 5vw, 3rem) }
+.summary {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  font-size: 1.08rem;
+  margin: 0 0 2.5rem;
+}
+.part + .part { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--line) }
+.part > h2 { font-size: 1.75rem; font-weight: 700 }
+.part > p { color: var(--muted) }
+section { margin-top: 2.25rem }
+h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: .6rem }
+p { margin: .6rem 0 0 }
+ul { margin: .6rem 0 0; padding-left: 1.25rem }
+li + li { margin-top: .35rem }
+code { font: 500 .9em var(--mono) }
+footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .88rem }
+</style>
+</head>
+<body>
+<header class="sky">
+  <div class="wrap">
+    <a href="./">&larr; Stratus</a>
+    <h1>Privacy in Stratus</h1>
+    <p>For the Stratus app and server. Last updated 8 November 2026.</p>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <p class="summary">Your photos and videos only go to the server you connect the app to. We don't run any server that receives them. There are no accounts, no ads and no analytics.</p>
+
+    <nav aria-label="On this page"><ul>
+      <li><a href="#app">The app</a></li>
+      <li><a href="#server">The server</a></li>
+    </ul></nav>
+
+    <div class="part" id="app">
+      <h2>The app</h2>
+      <p>The Stratus app for Android and iOS.</p>
+
+      <section>
+        <h3>What it uses on your phone</h3>
+        <ul>
+          <li><strong>Photos and videos</strong> in the folders you choose to back up.</li>
+          <li><strong>Your server's address, user name and password.</strong> They are stored on the phone, in the Android Keystore or the iOS Keychain.</li>
+          <li><strong>Your network type</strong>, so backups can wait for Wi-Fi.</li>
+          <li><strong>TVs and speakers on your local network</strong>, only when you choose one to play on.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>What it sends, and where</h3>
+        <ul>
+          <li><strong>To your server:</strong> your photos and videos, and any changes you make to your files.</li>
+          <li><strong>To a TV or speaker you choose:</strong> a link to the file you want to play. The link stops working after a day.</li>
+          <li><strong>To DAVx5 (Android only):</strong> if you tap <em>Calendars and contacts</em>, the app gives your server details to DAVx5 on the same phone. Nothing leaves the phone.</li>
+        </ul>
+        <p>The app sends nothing else. We never receive your photos, videos or password.</p>
+      </section>
+
+      <section>
+        <h3>Crash reports</h3>
+        <p>Crash reports are off by default. You can turn them on or off in the app menu. When they are on, the app sends them to <a href="https://sentry.io">Sentry</a> so we can fix bugs. A report contains:</p>
+        <ul>
+          <li>the error, your phone model, the system version and the app version;</li>
+          <li>when playing on a TV or speaker: the device name and the link to the file.</li>
+        </ul>
+        <p>Reports never include screenshots or your password. See <a href="https://sentry.io/privacy/">Sentry's privacy policy</a>.</p>
+      </section>
+    </div>
+
+    <div class="part" id="server">
+      <h2>The server</h2>
+      <p>The Stratus server that you, or someone you trust, runs.</p>
+
+      <section>
+        <h3>What it stores</h3>
+        <p>Everything you upload: files, photos, videos, music, calendars and contacts. It also stores details read from them, like the date and place of a photo, and small preview images. All of this stays in the storage chosen by whoever runs the server.</p>
+      </section>
+
+      <section>
+        <h3>What it sends</h3>
+        <p>Nothing, unless the person running it turns on one of these:</p>
+        <ul>
+          <li><strong>Error reports</strong> to Sentry. They can include file names and folder paths.</li>
+          <li><strong>Music lookup.</strong> Artist, album and song names are sent to <a href="https://musicbrainz.org">MusicBrainz</a>, <a href="https://coverartarchive.org">Cover Art Archive</a> and <a href="https://lrclib.net">LRCLIB</a> to find album covers and lyrics. No photos, videos or other files are sent.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Who is responsible</h3>
+        <p>The person who runs the server is responsible for the data on it. If you use someone else's server, their privacy policy applies. We have no access to your server.</p>
+      </section>
+    </div>
+
+    <section>
+      <h2>Children</h2>
+      <p>Stratus is not made for children.</p>
+    </section>
+
+    <section>
+      <h2>Changes and questions</h2>
+      <p>If we change this page, we will update the date at the top. You can see all changes in <a href="https://github.com/stratus-private-cloud/stratus-private-cloud.github.io/commits/main/privacy.html">the site's repository</a>. For questions, open an issue for <a href="https://github.com/stratus-private-cloud/stratus-app/issues">the app</a> or <a href="https://github.com/stratus-private-cloud/stratus-backend/issues">the server</a>.</p>
+    </section>
+  </div>
+</main>
+<footer>
+  <div class="wrap">Stratus is open source: <a href="https://github.com/stratus-private-cloud">github.com/stratus-private-cloud</a></div>
+</footer>
+</body>
+</html>
