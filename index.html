@@ -154,6 +154,8 @@ h3 { font-size: 1.2rem; font-weight: 600 }
 .shots figure { margin: 0; display: grid; gap: .6rem; align-content: start }
 .shots img { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--line); background: var(--surface) }
 .shots figcaption { color: var(--muted); font-size: .9rem }
+.shots.phone { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+.shots .credit { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .8rem }
 
 footer { border-top: 1px solid var(--line); padding-block: 2rem; color: var(--muted); font-size: .88rem }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem }
@@ -162,6 +164,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .sky .wrap { grid-template-columns: minmax(0, 1fr) }
   .strata { justify-self: start; max-width: 12rem }
   .shots { grid-template-columns: minmax(0, 1fr) }
+  .shots.phone { grid-template-columns: repeat(2, minmax(0, 1fr)) }
 }
 </style>
 </head>
@@ -228,6 +231,13 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
       <figure><img src="screens/files-wide.jpg" width="1280" height="800" alt="The file browser in the web UI, listing a folder of photos"><figcaption>Files</figcaption></figure>
       <figure><img src="screens/photos-wide.jpg" width="1280" height="800" alt="The photo gallery in the web UI, grouped by month"><figcaption>Photos</figcaption></figure>
       <figure><img src="screens/music-wide.jpg" width="1280" height="800" alt="An album page in the web UI's music library"><figcaption>Music</figcaption></figure>
+    </div>
+    <div class="shots phone">
+      <figure><img src="screens/app-home.jpg" width="456" height="1024" alt="The Android app browsing the server's files" loading="lazy"><figcaption>The app: files</figcaption></figure>
+      <figure><img src="screens/app-backup.jpg" width="456" height="1024" alt="The app's camera roll backup settings" loading="lazy"><figcaption>Camera roll backup</figcaption></figure>
+      <figure><img src="screens/app-video.jpg" width="456" height="1024" alt="The app's video library, a month of thumbnails" loading="lazy"><figcaption>Videos</figcaption></figure>
+      <figure><img src="screens/app-settings.jpg" width="456" height="1024" alt="The app's settings: server, backup, trash and crash reports" loading="lazy"><figcaption>Settings</figcaption></figure>
+      <p class="credit">Video stills from <a href="https://www.sintel.org">Sintel</a>, © Blender Foundation, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
     </div>
   </div>
 </section>
